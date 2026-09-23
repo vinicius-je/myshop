@@ -1,0 +1,19 @@
+### IDE ###
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+### Env / secrets ###
+.env
+.env.*
+!.env.example
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### Node (frontend) ###
+node_modules/
+dist/

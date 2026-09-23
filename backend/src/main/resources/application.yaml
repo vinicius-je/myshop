@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: myshop-api
+
+  # Carrega DB_* do arquivo .env na raiz do projeto (se existir).
+  config:
+    import: optional:file:.env[.properties]
+
+  # O SQL Server roda em container proprio, fora do ciclo de vida da aplicacao.
+  docker:
+    compose:
+      enabled: false
+
+  datasource:
+    url: jdbc:sqlserver://${DB_HOST}:${DB_PORT};databaseName=${DB_NAME};encrypt=true;trustServerCertificate=true
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    hikari:
+      pool-name: myshop-pool
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+
+  jpa:
+    hibernate:
+      # update: o Hibernate cria/ajusta as tabelas a partir das entidades.
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+        default_schema: dbo
+
+  sql:
+    init:
+      mode: never
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

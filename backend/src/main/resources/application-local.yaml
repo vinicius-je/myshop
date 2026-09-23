@@ -1,0 +1,14 @@
+# Profile de conveniencia: banco H2 em memoria, sem Docker.
+# Uso: ./mvnw spring-boot:run -Dspring-boot.run.profiles=local
+spring:
+  datasource:
+    url: jdbc:h2:mem:myshop;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_schema: PUBLIC
