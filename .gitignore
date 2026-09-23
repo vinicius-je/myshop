@@ -17,3 +17,6 @@ Thumbs.db
 ### Node (frontend) ###
 node_modules/
 dist/
+
+### Claude Code (local) ###
+.claude/settings.local.json
