@@ -9,6 +9,7 @@ public record ItemPedidoResponse(
         Long id,
         Long produtoId,
         String produtoNome,
+        String produtoImagem,
         Integer quantidade,
         BigDecimal precoUnitario,
         BigDecimal subtotal) {
@@ -18,6 +19,7 @@ public record ItemPedidoResponse(
                 item.getId(),
                 item.getProduto().getId(),
                 item.getProduto().getNome(),
+                item.getProduto().getImagem(),
                 item.getQuantidade(),
                 item.getPrecoUnitario(),
                 item.subtotal());

@@ -29,13 +29,18 @@ public class Produto {
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal preco;
 
+    /** URL da imagem do produto. Opcional: produto sem foto continua vendável. */
+    @Column(length = 500)
+    private String imagem;
+
     /** Construtor exigido pelo JPA. */
     protected Produto() {
     }
 
-    public Produto(String nome, BigDecimal preco) {
+    public Produto(String nome, BigDecimal preco, String imagem) {
         this.nome = nome;
         this.preco = preco;
+        this.imagem = imagem;
     }
 
     public Long getId() {
@@ -48,5 +53,9 @@ public class Produto {
 
     public BigDecimal getPreco() {
         return preco;
+    }
+
+    public String getImagem() {
+        return imagem;
     }
 }

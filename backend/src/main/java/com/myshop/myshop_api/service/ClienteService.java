@@ -1,13 +1,13 @@
 package com.myshop.myshop_api.service;
 
 import com.myshop.myshop_api.domain.Cliente;
-import com.myshop.myshop_api.domain.Produto;
 import com.myshop.myshop_api.dto.CriarClienteRequest;
 import com.myshop.myshop_api.repository.ClienteRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 /** <b>SRP</b> — regras de cliente. */
 @Service
@@ -28,5 +28,10 @@ public class ClienteService {
     @Transactional
     public Cliente criar(CriarClienteRequest request) {
         return clienteRepository.save(new Cliente(request.nome(), request.email()));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Cliente> listar() {
+        return clienteRepository.findAll(Sort.by("nome"));
     }
 }

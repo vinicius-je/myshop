@@ -17,6 +17,8 @@ Projeto educacional em Spring Boot para estudar os cinco princípios SOLID.
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=local
 ```
 
+O profile `local` já cadastra produtos e clientes de exemplo (`config/DadosIniciais`).
+
 ### Com SQL Server em container
 
 Crie o database `MyShop` na instância e defina as variáveis de ambiente:
@@ -35,14 +37,27 @@ Crie o database `MyShop` na instância e defina as variáveis de ambiente:
 
 As tabelas são criadas pelo Hibernate (`ddl-auto: update`); o database em si não.
 
+Para popular o catálogo com produtos de exemplo, depois da primeira subida:
+
+```bash
+sqlcmd -S localhost,1433 -U sa -P <senha> -d MyShop -i scripts/produtos-exemplo.sql
+```
+
 Swagger UI: <http://localhost:8080/swagger-ui.html>
+
+CORS aberto para qualquer origem. Para restringir (ex.: produção), defina
+`app.cors.allowed-origins` (padrões separados por vírgula).
 
 ## Endpoints
 
 | Verbo | Rota | Descrição |
 |---|---|---|
+| GET | `/clientes` | Lista clientes |
 | POST | `/clientes` | Cria cliente |
+| GET | `/produtos` | Lista produtos (catálogo) |
+| GET | `/produtos/{id}` | Busca produto |
 | POST | `/produtos` | Cria produto |
+| GET | `/formas-pagamento` | Lista as formas de pagamento aceitas |
 | POST | `/pedidos` | Cria pedido (status PENDENTE) |
 | GET | `/pedidos/{id}` | Busca pedido |
 | POST | `/pedidos/{id}/pagamento` | Paga o pedido |
@@ -57,7 +72,7 @@ curl -X POST localhost:8080/clientes \
 
 curl -X POST localhost:8080/produtos \
   -H "Content-Type: application/json" \
-  -d "{\"nome\":\"Teclado\",\"preco\":150.00}"
+  -d "{\"nome\":\"Teclado\",\"preco\":150.00,\"imagem\":\"https://example.com/teclado.jpg\"}"
 
 curl -X POST localhost:8080/pedidos \
   -H "Content-Type: application/json" \
