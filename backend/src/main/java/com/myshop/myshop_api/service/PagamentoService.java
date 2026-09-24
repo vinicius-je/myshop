@@ -8,6 +8,7 @@ import com.myshop.myshop_api.pagamento.Pagamento;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -75,6 +76,17 @@ public class PagamentoService {
         pedido.marcarComoPago();
 
         return PedidoResponse.de(pedido);
+    }
+
+    /**
+     * Formas de pagamento registradas, em ordem alfabética.
+     *
+     * <p><b>OCP</b> — a lista sai do mesmo Map injetado pelo Spring. Uma
+     * implementação nova aparece aqui (e na tela de checkout do frontend)
+     * sem editar este método.
+     */
+    public List<String> formasDisponiveis() {
+        return formasDePagamento.keySet().stream().sorted().toList();
     }
 
     /**
